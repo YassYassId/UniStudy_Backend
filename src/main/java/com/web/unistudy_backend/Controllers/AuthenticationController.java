@@ -21,7 +21,7 @@ import java.util.Optional;
 @CrossOrigin(origins = "http://localhost:5173")
 public class AuthenticationController {
     private final UserService userService;
-//    private final SimpMessagingTemplate messagingTemplate;
+    private final SimpMessagingTemplate messagingTemplate;
 
 
     @PostMapping(value = "/register")
@@ -29,7 +29,7 @@ public class AuthenticationController {
         System.out.println(registerRequest);
         JwtAuthenticationResponse response = userService.register(registerRequest);
         Optional<User> newUser = userService.getUser(registerRequest.getEmail());
-//        messagingTemplate.convertAndSend("/topic/public", newUser.get()); // Send notification after successful registration
+        messagingTemplate.convertAndSend("/topic/public", newUser.get()); // Send notification after successful registration
         return ResponseEntity.ok(response);
     }
 
